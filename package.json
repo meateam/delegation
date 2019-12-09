@@ -1,0 +1,35 @@
+{
+  "name": "delegation-service",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "npm run build && node ./dist/index.js",
+    "build": "tsc",
+    "serve": "node ./dist/index.js",
+    "test": "npm run tslint && npm run run_tests",
+    "run_tests": "npm run test:unit",
+    "test:unit": "cross-env NODE_ENV=test mocha --recursive -r ts-node/register src/**/*.unit.spec.ts --exit",
+    "test:coverage": "cross-env NODE_ENV=test nyc npm test",
+    "coverage-test": "cross-env NODE_ENV=test nyc check-coverage --lines 95 --functions 95 --branches 95",
+    "tslint": "tslint -c tslint.json -p tsconfig.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/meateam/delegation.git"
+  },
+  "author": "Allkinds",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/meateam/delegation/issues"
+  },
+  "homepage": "https://github.com/meateam/delegation#readme",
+  "dependencies": {
+    "@types/mongoose": "^5.5.32",
+    "grpc": "^1.24.2",
+    "mongoose": "^5.7.14",
+    "tslint": "^5.20.1",
+    "tslint-config-airbnb": "^5.11.2",
+    "typescript": "^3.7.3"
+  }
+}
