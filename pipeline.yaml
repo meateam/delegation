@@ -1,4 +1,4 @@
-repoName: meateam/user-service
+repoName: meateam/deligation-service
 runTests: true
 testCommand: "npm run run_tests"
 deployUponTestSuccess: true

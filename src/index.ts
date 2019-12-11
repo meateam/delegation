@@ -1,8 +1,18 @@
-const grpc = require('grpc');
+import * as grpc from  'grpc';
+import { DelegationService } from '../proto/delegation-service/generated/delegation_grpc_pb';
+import { userServiceUrl, host, port } from './config';
+import Server from './server';
 
-const server = new grpc.Server();
-const host = '0.0.0.0';
-const port = '8080';
-server.bind(`${host}:${port}`, grpc.ServerCredentials.createInsecure());
-server.start();
-console.log(`Server is listening on port ${port}`);
+function startServer() {
+    const server = new grpc.Server();
+
+    server.addService(DelegationService, new Server(userServiceUrl));
+    server.bind(`${host}:${port}`, grpc.ServerCredentials.createInsecure());
+    server.start();
+    console.log(`Server is listening on port ${port}`);
+}
+
+// Ensures you don't run the server twice
+if (!module.parent) {
+    startServer();
+}
