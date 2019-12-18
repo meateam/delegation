@@ -1,0 +1,11 @@
+version: '2.1'
+services:
+  delegation-service:
+    image: delegation-service:latest
+    build: .
+    ports:
+      - '8080:8080'
+    environment:
+      DEL_PROT: 8080
+      DEL_SPIKE_REQUIRED: 'false'
+      PHONE_BOOK_URL: 'http://localhost:3000'
