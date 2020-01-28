@@ -32,7 +32,7 @@
   "devDependencies": {
     "@types/axios": "^0.14.0",
     "@types/google-protobuf": "^3.7.2",
-    "@types/mongoose": "^5.5.32",
+    "@types/mongoose": "^5.5.34",
     "@types/redis": "^2.8.14",
     "grpc_tools_node_protoc_ts": "^2.5.8",
     "tslint-config-airbnb": "^5.11.2"

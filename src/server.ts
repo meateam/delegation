@@ -5,10 +5,12 @@ import { User, GetUserByIDRequest, FindUserByNameRequest, GetUserResponse, FindU
 
 interface IUser {
     id: string;
-    mail: string;
+    armyId: string;
+    displayName: string; // displayName
     firstName: string;
     lastName: string;
-    hierarchy: string;
+    rank: string;
+    mail: string;
 }
 
 export default class Server implements IDelegationServer {
@@ -18,7 +20,7 @@ export default class Server implements IDelegationServer {
 
     constructor(userServiceUrl: string) {
         this.userServiceUrl = userServiceUrl;
-        this.baseUrl = `${userServiceUrl}/api/persons`;
+        this.baseUrl = `${userServiceUrl}/persons`;
     }
 
     async getUserByID(call: grpc.ServerUnaryCall<GetUserByIDRequest>, callback: grpc.sendUnaryData<GetUserResponse>) {
@@ -36,13 +38,13 @@ export default class Server implements IDelegationServer {
                         message: `The user with id ${id} is not found`,
                         name: 'NotFound',
                     };
-                    console.log(err, `The user with id ${id} is not found`);
+                    console.log(`The user with id ${id} is not found`);
                     return callback(e, null);
                 }
             }
             e = {
                 code: grpc.status.INTERNAL,
-                message: err,
+                message: `Unknown error: ${err}`,
                 name: 'Unknown',
             };
             console.log(`Unknown Error while contacting PhoneBook ${err}`);
@@ -92,13 +94,7 @@ function setUser(userData: IUser): User {
     user.setFirstName(userData.firstName);
     user.setLastName(userData.lastName);
     user.setFullName(`${userData.firstName} ${userData.lastName}`);
-
-    let hierarchy = userData.hierarchy;
-    if (typeof(hierarchy) !== 'string') {
-        hierarchy = flattenHierarchy(hierarchy);
-    }
-
-    user.setHierarchy(hierarchy);
+    user.setHierarchy(userData.displayName);
     return user;
 }
 
