@@ -61,8 +61,7 @@ export default class Server implements IDelegationServer {
         const name = call.request.getName();
         let res: AxiosResponse;
         try {
-            res = await axios.get(`${this.baseUrl}/search`,
-                                  { params: { fullname: name } });
+            res = await axios.get(`${this.baseUrl}/search`, { params: { fullname: name } });
         } catch (err) {
             console.log(`Unknown Error while contacting PhoneBook ${err}`);
 
