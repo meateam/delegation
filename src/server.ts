@@ -1,7 +1,16 @@
-import * as grpc from  'grpc';
+import * as grpc from 'grpc';
 import axios, { AxiosResponse } from 'axios';
 import { IDelegationServer } from '../proto/delegation-service/generated/delegation_grpc_pb';
 import { User, GetUserByIDRequest, FindUserByNameRequest, GetUserResponse, FindUserByNameResponse } from '../proto/delegation-service/generated/delegation_pb';
+import { GrpcHealthCheck, HealthCheckResponse } from 'grpc-ts-health-check';
+
+// For the health-check
+export const serviceNames: string[] = ['', 'delegation.Delegation'];
+export const healthCheckStatusMap = {
+    '': HealthCheckResponse.ServingStatus.UNKNOWN,
+    serviceName: HealthCheckResponse.ServingStatus.UNKNOWN,
+};
+export const grpcHealthCheck = new GrpcHealthCheck(healthCheckStatusMap);
 
 interface IUser {
     id: string;
@@ -13,7 +22,7 @@ interface IUser {
     mail: string;
 }
 
-export default class Server implements IDelegationServer {
+export class Server implements IDelegationServer {
 
     private userServiceUrl: string;
     private baseUrl: string;
@@ -50,7 +59,7 @@ export default class Server implements IDelegationServer {
             console.log(`Unknown Error while contacting PhoneBook ${err}`);
             return callback(e, null);
         }
-        const userData:IUser = res.data;
+        const userData: IUser = res.data;
         const user = setUser(userData);
         const response = new GetUserResponse();
         response.setUser(user);
@@ -61,8 +70,7 @@ export default class Server implements IDelegationServer {
         const name = call.request.getName();
         let res: AxiosResponse;
         try {
-            res = await axios.get(`${this.baseUrl}/search`,
-                                  { params: { fullname: name } });
+            res = await axios.get(`${this.baseUrl}/search`, { params: { fullname: name } });
         } catch (err) {
             console.log(`Unknown Error while contacting PhoneBook ${err}`);
 
@@ -74,7 +82,7 @@ export default class Server implements IDelegationServer {
 
             return callback(e, null);
         }
-        const usersData:IUser[] = res.data;
+        const usersData: IUser[] = res.data;
         const users: User[] = [];
         usersData.forEach((userData) => {
             users.push(setUser(userData));
