@@ -1,4 +1,4 @@
-//delegation-servicepipeline {
+//delegation-service {
 pipeline {
   agent any
     stages {
