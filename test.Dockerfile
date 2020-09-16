@@ -8,6 +8,8 @@ WORKDIR $HOME/app
 
 RUN npm install --silent --progress=false
 
+RUN npm config set unsafe-perm true
+
 RUN npm install -g mocha
 
 COPY . $HOME/app/
