@@ -43,7 +43,7 @@ pipeline {
         //   }
         // }
         steps{  
-          withCredentials([usernamePassword(credentialsId:';ISRAEL_ACR',usernameVariable: 'USER', passwordVariable: 'PASS')]) {
+          withCredentials([usernamePassword(credentialsId:'ISRAEL_ACR',usernameVariable: 'USER', passwordVariable: 'PASS')]) {
             sh "docker login  israel.azurecr.io -u ${USER} -p ${PASS}"
           }
         }
