@@ -28,6 +28,7 @@ pipeline {
     }
   }   
     stages {
+      // this stage create enviroment variable from git for discored massage
       stage('get_commit_msg') {
         steps {
          container('jnlp'){       
@@ -50,11 +51,13 @@ pipeline {
         }
        }
       }
+      // build image for unit test
       stage('build dockerfile of tests') {
         steps {
             sh "docker build -t unittest -f test.Dockerfile ." 
         }  
       }
+      // run image of unit test
       stage('run unit tests') {   
         steps {
             sh "docker run unittest"  
@@ -65,6 +68,7 @@ pipeline {
           }
         }
       }
+      // login to acr when pushed to branch master or develo
       stage('login to azure container registry') {
         when {
           anyOf {
@@ -77,6 +81,7 @@ pipeline {
           }
         }
       }  
+      // when pushed to master or develop build image and push to acr
       stage('build dockerfile of system only for master and develop and push them to acr') {
         when {
           anyOf {
