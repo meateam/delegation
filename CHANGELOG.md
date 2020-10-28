@@ -12,3 +12,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 [unreleased]: https://github.com/meateam/delegation-service/compare/master...develop
+[v2.0.0]: https://github.com/meateam/delegation-service/compare/v1.2...v2.0.0
