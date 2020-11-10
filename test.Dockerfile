@@ -1,4 +1,4 @@
-FROM node:latest
+FROM node:12.16.2
 
 ENV HOME=/home/pandora
 
@@ -8,10 +8,8 @@ WORKDIR $HOME/app
 
 RUN npm install --silent --progress=false
 
-RUN npm install -g mocha
-
 COPY . $HOME/app/
 
 EXPOSE 3000
 
-CMD ["npm", "test"]
+CMD ["npm", "run", "test"]
