@@ -32,7 +32,7 @@
   "devDependencies": {
     "@types/axios": "^0.14.0",
     "@types/google-protobuf": "^3.7.4",
-    "grpc_tools_node_protoc_ts": "^2.5.8",
+    "grpc_tools_node_protoc_ts": "^5.1.0",
     "tslint-config-airbnb": "^5.11.2"
   }
 }
