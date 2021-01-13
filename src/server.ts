@@ -5,10 +5,9 @@ import { User, GetUserByIDRequest, FindUserByNameRequest, GetUserResponse, FindU
 import { GrpcHealthCheck, HealthCheckResponse } from 'grpc-ts-health-check';
 
 // For the health-check
-export const serviceNames: string[] = ['', 'delegation.Delegation'];
-export const healthCheckStatusMap = {
+export const healthCheckStatusMap:any = {
     '': HealthCheckResponse.ServingStatus.UNKNOWN,
-    serviceName: HealthCheckResponse.ServingStatus.UNKNOWN,
+    'delegation.Delegation': HealthCheckResponse.ServingStatus.UNKNOWN,
 };
 export const grpcHealthCheck = new GrpcHealthCheck(healthCheckStatusMap);
 
