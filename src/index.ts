@@ -7,7 +7,7 @@ import axios, { AxiosResponse } from 'axios';
 
 const StatusesEnum = HealthCheckResponse.ServingStatus;
 const servicesNum = Object.keys(healthCheckStatusMap).length;
-let requests = new Array<HealthCheckRequest>(servicesNum);
+const requests = Array<HealthCheckRequest>(servicesNum);
 
 function startServer() {
     // Create the server
@@ -27,19 +27,18 @@ function startServer() {
     // Create the health client
     const healthClient = new HealthClient(`${host}:${port}`, grpc.credentials.createInsecure());
     addServices();
-    
-    setInterval(function () {
-        requests.forEach(request => {  
+
+    setInterval(() => {
+        requests.forEach((request) => {
             // Check health status, this will provide the current health status of the service when the request is executed.
             healthClient.check(request, (error: Error | null, response: HealthCheckResponse) => {
                 if (error) {
                     console.log(`${request.getService()} Service: Health Check Failed`);
                     console.log(error);
-                } 
-            }); 
+                }
+            });
         });
-    },1000);
-
+    },          1000);
 
     updateHealthStatus();
     setHealthStatus(HealthCheckResponse.ServingStatus.SERVING);
@@ -55,10 +54,10 @@ function addServices(): void {
 }
 
 function setHealthStatus(status: number): void {
-    requests.forEach(request => {
+    requests.forEach((request) => {
         const serviceName: string = request.getService();
         healthCheckStatusMap[serviceName] = status;
-    })
+    });
 }
 
 async function updateHealthStatus() {
